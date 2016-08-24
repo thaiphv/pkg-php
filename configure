@@ -50674,8 +50674,6 @@ fi
     IMAP_DIR="$ep_realdir"/`basename "$IMAP_DIR"`
   fi
 
-      as_fn_error $? ">>>>>DEBUG: $IMAP_DIR" "$LINENO" 5
-
 
     if test -z "$IMAP_DIR"; then
       as_fn_error $? "Cannot find rfc822.h. Please check your c-client installation." "$LINENO" 5
