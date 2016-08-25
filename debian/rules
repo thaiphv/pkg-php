@@ -295,7 +295,7 @@ configure-apache2-stamp: prepared-stamp
 		--with-mysqli=shared,/usr/bin/mysql_config \
 		--with-pspell=shared,/usr \
 		--with-unixODBC=shared,/usr \
-		--with-recode=shared,/usr \
+		--without-recode \
 		--with-xsl=shared,/usr \
 		--with-snmp=shared,/usr \
 		--with-sqlite3=shared,/usr \
