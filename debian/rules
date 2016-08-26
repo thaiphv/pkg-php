@@ -518,16 +518,16 @@ install: build
 
 	# remove netware and win32 headers that we don't want
 	cd debian/libapache2-mod-php5/usr/include/php/ && \
-		    ([ -f TSRM/readdir.h ] && $(RM) TSRM/readdir.h) && \
-			([ -f TSRM/tsrm_config.nw.h ] && $(RM) TSRM/tsrm_config.nw.h) && \
-			([ -f TSRM/tsrm_config.w32.h ] && $(RM) TSRM/tsrm_config.w32.h) && \
-			([ -f TSRM/tsrm_nw.h ] && $(RM) TSRM/tsrm_nw.h) && \
-			([ -f TSRM/tsrm_win32.h ] && $(RM) TSRM/tsrm_win32.h) && \
-			([ -f Zend/zend_config.nw.h ] && $(RM) Zend/zend_config.nw.h) && \
-			([ -f Zend/zend_config.w32.h ] && $(RM) Zend/zend_config.w32.h) && \
-			([ -f main/config.nw.h ] && $(RM) main/config.nw.h) && \
-			([ -f main/config.w32.h ] && $(RM) main/config.w32.h) && \
-			([ -f main/win95nt.h ] && $(RM) main/win95nt.h)
+	    ([ ! -f TSRM/readdir.h ] || $(RM) TSRM/readdir.h) && \
+		([ ! -f TSRM/tsrm_config.nw.h ] || $(RM) TSRM/tsrm_config.nw.h) && \
+		([ ! -f TSRM/tsrm_config.w32.h ] || $(RM) TSRM/tsrm_config.w32.h) && \
+		([ ! -f TSRM/tsrm_nw.h ] || $(RM) TSRM/tsrm_nw.h) && \
+		([ ! -f TSRM/tsrm_win32.h ] || $(RM) TSRM/tsrm_win32.h) && \
+		([ ! -f Zend/zend_config.nw.h ] || $(RM) Zend/zend_config.nw.h) && \
+		([ ! -f Zend/zend_config.w32.h ] || $(RM) Zend/zend_config.w32.h) && \
+		([ ! -f main/config.nw.h ] || $(RM) main/config.nw.h) && \
+		([ ! -f main/config.w32.h ] || $(RM) main/config.w32.h) && \
+		([ ! -f main/win95nt.h ] || $(RM) main/win95nt.h)
 
 	# install PEAR
 	cp -a pear-build/* debian/php-pear/
