@@ -120,8 +120,8 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--enable-bcmath \
 		--with-bz2 \
 		--enable-ctype \
-		--without-db4 \
-		--without-qdbm \
+		--with-db4 \
+		--with-qdbm=/usr \
 		--without-gdbm \
 		--with-iconv \
 		--enable-exif \
@@ -141,8 +141,7 @@ COMMON_CONFIG=--build=$(DEB_BUILD_GNU_TYPE) \
 		--enable-zip \
 		--with-mhash=yes \
 		--with-system-tzdata \
-		--with-mysql-sock=/var/run/mysqld/mysqld.sock \
-		--with-libdir=/lib/x86_64-linux-gnu
+		--with-mysql-sock=/var/run/mysqld/mysqld.sock
 
 BUILTIN_EXTENSION_CHECK=$$e=get_loaded_extensions(); natcasesort($$e); \
 			$$s="The following extensions are built in:"; \
@@ -278,7 +277,7 @@ configure-apache2-stamp: prepared-stamp
 		--with-curl=shared,/usr \
 		--with-enchant=shared,/usr \
 		--with-zlib-dir=/usr \
-		--with-gd --enable-gd-native-ttf \
+		--with-gd=shared,/usr --enable-gd-native-ttf \
 		--with-gmp=shared,/usr \
 		--with-jpeg-dir=shared,/usr \
 		--with-xpm-dir=shared,/usr/X11R6 \
@@ -295,7 +294,7 @@ configure-apache2-stamp: prepared-stamp
 		--with-mysqli=shared,/usr/bin/mysql_config \
 		--with-pspell=shared,/usr \
 		--with-unixODBC=shared,/usr \
-		--without-recode \
+		--with-recode=shared,/usr \
 		--with-xsl=shared,/usr \
 		--with-snmp=shared,/usr \
 		--with-sqlite3=shared,/usr \
@@ -517,17 +516,13 @@ install: build
 	cd cgi-build && $(MAKE) install-headers INSTALL_ROOT=$(CURDIR)/debian/php5-dev
 
 	# remove netware and win32 headers that we don't want
-	cd debian/libapache2-mod-php5/usr/include/php/ && \
-	    ([ ! -f TSRM/readdir.h ] || $(RM) TSRM/readdir.h) && \
-		([ ! -f TSRM/tsrm_config.nw.h ] || $(RM) TSRM/tsrm_config.nw.h) && \
-		([ ! -f TSRM/tsrm_config.w32.h ] || $(RM) TSRM/tsrm_config.w32.h) && \
-		([ ! -f TSRM/tsrm_nw.h ] || $(RM) TSRM/tsrm_nw.h) && \
-		([ ! -f TSRM/tsrm_win32.h ] || $(RM) TSRM/tsrm_win32.h) && \
-		([ ! -f Zend/zend_config.nw.h ] || $(RM) Zend/zend_config.nw.h) && \
-		([ ! -f Zend/zend_config.w32.h ] || $(RM) Zend/zend_config.w32.h) && \
-		([ ! -f main/config.nw.h ] || $(RM) main/config.nw.h) && \
-		([ ! -f main/config.w32.h ] || $(RM) main/config.w32.h) && \
-		([ ! -f main/win95nt.h ] || $(RM) main/win95nt.h)
+	cd debian/libapache2-mod-php5/usr/include/php5/ && \
+		  $(RM) TSRM/readdir.h \
+			TSRM/tsrm_config.nw.h TSRM/tsrm_config.w32.h\
+			TSRM/tsrm_nw.h TSRM/tsrm_win32.h\
+			Zend/zend_config.nw.h Zend/zend_config.w32.h\
+			main/config.nw.h main/config.w32.h\
+			main/win95nt.h
 
 	# install PEAR
 	cp -a pear-build/* debian/php-pear/
